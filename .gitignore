@@ -33,3 +33,20 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+# Added by cargo
+
+/target
+/analyze
+/.github
+Dockerfile
+ecosystem.config.js
+next.config.js
+/public
+/mdx
+/components/blog
+/icons
+/app/blog
+/app/portfolio/thsr
+/app/portfolio/todo

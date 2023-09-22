@@ -1,0 +1,28 @@
+:root {
+  --radix-toast-swipe-move-x: 3rem;
+  --radix-toast-swipe-move-y: 3rem;
+  --radix-toast-swipe-end-x: 3rem;
+  --radix-toast-swipe-end-y: 3rem;
+}
+
+.ToastRoot[data-swipe='move'] {
+  transform: translateX(var(--radix-toast-swipe-move-x));
+}
+
+.ToastRoot[data-swipe='cancel'] {
+  transform: translateX(0);
+  transition: transform 200ms ease-out;
+}
+
+.ToastRoot[data-type='end'] {
+  animation: slideRight 100ms ease-out;
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(var(--radix-toast-swipe-end-x));
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
