@@ -141,7 +141,12 @@ module.exports = {
             gridTemplateColumns: 'minmax(0, 3fr) 1fr',
             width: '100%',
             gap: '1rem',
-            padding: '3rem 0',
+          },
+          '.line-chart-container-mobile': {
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1.5rem',
+            paddingBottom: '2rem',
           },
         }),
         addUtilities({

@@ -1,4 +1,4 @@
-import type {ChartData, ChartOptions} from 'chart.js'
+import type {ChartData, ChartOptions, CoreScaleOptions} from 'chart.js'
 
 declare module 'Charts' {
   interface LineProps {
@@ -8,5 +8,9 @@ declare module 'Charts' {
   interface BarProps {
     options: ChartOptions<'bar'>
     data: ChartData<'bar'>
+  }
+
+  interface _ScaleOptions extends CoreScaleOptions {
+    readonly _gridLineItems: number
   }
 }

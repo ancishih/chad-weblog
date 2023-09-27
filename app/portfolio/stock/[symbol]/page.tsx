@@ -16,7 +16,7 @@ import Link from 'next/link'
 import Skeleton from '@/components/ui/Skeleton'
 import StockHeader from '@/components/portfolio/StockHeader'
 import DailyTrend from '@/components/portfolio/DailyTrend'
-
+import DailyIndicator from '@/components/portfolio/DailyIndicator'
 async function getIntradayPrice(symbol: string) {
   const res = await axios.get<IntradayPriceWithSymbol>(
     `${process.env.APP_ENDPOINT}/api/v2/stock/price/${symbol}`,
@@ -89,15 +89,24 @@ export default function Tickers({params}: {params: {symbol: string}}) {
     <>
       <StockHeader />
       <div className='py-10'>
-        {dailyPrice.isLoading && intradyPrice.isLoading ? <>loading</> : null}
+        {dailyPrice.isLoading && intradyPrice.isLoading ? (
+          <div className='pt-12 line-chart-container-mobile md:line-chart-container md:pb-12'>
+            loading
+          </div>
+        ) : null}
         {dailyPrice.isSuccess && intradyPrice.isSuccess ? (
-          <DailyTrend
-            daily={dailyPrice.data as DailyPrice}
-            intraday={intradyPrice.data as IntradayPriceWithSymbol}
-          />
+          <div className='pt-12 line-chart-container-mobile md:line-chart-container md:pb-12'>
+            <DailyTrend
+              daily={dailyPrice.data as DailyPrice}
+              intraday={intradyPrice.data as IntradayPriceWithSymbol}
+            />
+            <DailyIndicator
+              data={intradyPrice.data as IntradayPriceWithSymbol}
+            />
+          </div>
         ) : null}
         <Tabs defaultValue='income_statement'>
-          <TabsList className='flex flex-row tabs-list'>
+          <TabsList className='flex flex-row text-sm md:text-base tabs-list'>
             <TabsTrigger
               className='data-[state=active]:tabs-active px-4 py-2 rounded-t-md data-[state=active]:bg-white data-[state=inactive]:bg-slate-400/20 data-[state=inactive]:text-slate-400 transition-colors'
               value='income_statement'
@@ -124,6 +133,7 @@ export default function Tickers({params}: {params: {symbol: string}}) {
             </TabsTrigger>
           </TabsList>
           <TabsContent
+            tabIndex={-1}
             className='p-1.5 pt-1 tabs-content'
             value='income_statement'
           >
@@ -133,6 +143,7 @@ export default function Tickers({params}: {params: {symbol: string}}) {
             ) : null}
           </TabsContent>
           <TabsContent
+            tabIndex={-1}
             className='p-1.5 pt-1 tabs-content'
             value='balance_sheet'
           >
@@ -141,13 +152,21 @@ export default function Tickers({params}: {params: {symbol: string}}) {
               <DataTable data={balanceSheet.data as BalanceSheetData} />
             ) : null}
           </TabsContent>
-          <TabsContent className='p-1.5 pt-1 tabs-content' value='cashflow'>
+          <TabsContent
+            tabIndex={-1}
+            className='p-1.5 pt-1 tabs-content'
+            value='cashflow'
+          >
             {cashflow.isLoading ? <div>loading</div> : null}
             {cashflow.isSuccess ? (
               <DataTable data={cashflow.data as CashFlowData} />
             ) : null}
           </TabsContent>
-          <TabsContent className='p-6 tabs-content' value='profile'>
+          <TabsContent
+            tabIndex={-1}
+            className='p-6 tabs-content'
+            value='profile'
+          >
             {profile.isLoading ? (
               <div className='flex flex-col gap-2'>
                 <Skeleton className='w-48 delay-500 h-7' />

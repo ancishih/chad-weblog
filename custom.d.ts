@@ -97,7 +97,7 @@ declare module 'Stock' {
     result: {
       symbol: string
       data: {
-        label: string
+        time: string
         open: number
         close: number
         high: number
@@ -120,10 +120,16 @@ declare module 'Stock' {
 
   type IntradayPriceWithSymbol = {
     result: {
-      company_name: string
       data: IntradayPrice
-      exchange_short_name: string
-      symbol: string
+      stock: {
+        change: number
+        company_name: string
+        exchange_short_name: string
+        mkt_cap: number
+        price: number
+        price_range: number
+        symbol: string
+      }
     }
   }
 

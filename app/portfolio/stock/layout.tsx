@@ -6,7 +6,7 @@ export default function StockRoot({children}: {children: React.ReactNode}) {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <main className='container mx-auto'>{children}</main>
+        <main className='container max-h-screen mx-auto'>{children}</main>
       </QueryClientProvider>
     </>
   )

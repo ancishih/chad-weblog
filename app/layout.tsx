@@ -3,7 +3,7 @@ import type {Metadata} from 'next'
 import {Noto_Sans} from 'next/font/google'
 import Toaster from '@/components/ui/toaster'
 import cn from '@/utils/cn'
-// const inter = Inter({subsets: ['latin']})
+
 const noto_sans = Noto_Sans({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '900'],
