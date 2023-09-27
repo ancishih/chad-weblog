@@ -8,29 +8,22 @@ export default function DailyIndicator({
     result: {stock, data: price},
   } = data
 
-  const minPrice = Math.min(...price.map(({low}) => low))
+  // const getMktcap = (num: number) => {
+  //   const unit = num.toString().length
 
-  const maxPrice = Math.max(...price.map(({high}) => high))
-
-  const b = 1000_000_000
-
-  const getMktcap = (num: number) => {
-    let unit = num.toString().length
-
-    if (unit > 10) {
-      return Math.ceil(num / 1000_000_0) / 100 + 'B'
-    } else if (unit < 10 && unit > 7) {
-      let abbrev = Math.ceil(num / 1000_0) / 100 + 'M'
-      return abbrev
-    } else {
-      return num.toString()
-    }
-  }
+  //   if (unit > 10) {
+  //     return Math.ceil(num / 1000_000_0) / 100 + 'B'
+  //   } else if (unit < 10 && unit > 7) {
+  //     return Math.ceil(num / 1000_0) / 100 + 'M'
+  //   } else {
+  //     return num.toString()
+  //   }
+  // }
 
   return (
     <>
       <div className='px-6 md:p-0'>
-        <div className='flex flex-row'>
+        {/* <div className='flex flex-row'>
           <span>{price.at(0)?.open as number}</span>
           <span>{price.at(-1)?.close as number}</span>
         </div>
@@ -42,7 +35,7 @@ export default function DailyIndicator({
         </div>
         <div className=''>
           <span>{getMktcap(stock.mkt_cap)}</span>
-        </div>
+        </div> */}
       </div>
     </>
   )

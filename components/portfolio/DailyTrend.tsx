@@ -150,7 +150,7 @@ export default function DailyTrend({
       },
       scales: {
         x: {
-          //@ts-ignore
+          /* @ts-expect-error type-error with ChartProps<ChartType, DefaultDataPoint<ChartType>> */
           type: 'timeseries',
           grid: {
             display: false,
@@ -241,11 +241,11 @@ export default function DailyTrend({
     const numOfSegments = width / segments
     const index = Math.floor((x_coord - left) / numOfSegments)
 
-    let yStart = y.getPixelForValue(data.datasets[0].data[index] as number)
+    const yStart = y.getPixelForValue(data.datasets[0].data[index] as number)
 
-    let yEnd = y.getPixelForValue(data.datasets[0].data[index + 1] as number)
+    const yEnd = y.getPixelForValue(data.datasets[0].data[index + 1] as number)
 
-    let yInterpolation =
+    const yInterpolation =
       yStart +
       ((yEnd - yStart) / numOfSegments) *
         (x_coord - x.getPixelForValue(data.labels?.[index] as number))
@@ -505,7 +505,7 @@ const getDurationOptions = (
     new Date(),
   )
 
-  let len = maxData.length
+  const len = maxData.length
 
   const FIVE_DAYS = 5
   const ONE_MONTH = 20
@@ -515,8 +515,8 @@ const getDurationOptions = (
   const THREE_YEAR = 720
 
   const YTD = set(LAST_INTRADAY, {month: 0, date: 1})
-  let max = {label: 'MAX', value: maxData}
-  let d1 = {label: '1D', value: intraday_data}
+  const max = {label: 'MAX', value: maxData}
+  const d1 = {label: '1D', value: intraday_data}
 
   if (len > THREE_YEAR) {
     const LAST_MONTH = parse(

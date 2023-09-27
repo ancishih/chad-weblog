@@ -12,11 +12,12 @@ import parse from 'date-fns/parse'
 import isAfter from 'date-fns/isAfter'
 import set from 'date-fns/set'
 import add from 'date-fns/add'
+import Skeleton from '@/components/ui/Skeleton'
 // import
 
 const listNews = async () => {
   try {
-    let res = await axios.get<News[]>(
+    const res = await axios.get<News[]>(
       `${process.env.APP_ENDPOINT}/api/stock/news`,
     )
 
@@ -27,7 +28,7 @@ const listNews = async () => {
 }
 
 const getMajorIndexes = async (symbol: string) => {
-  let res = await axios.get(
+  const res = await axios.get(
     `${process.env.FMP_BASE_URL}/api/v3/historical-chart/1min/${symbol}?apikey=${process.env.FMP_APIKEY}`,
   )
   if (res.status === 200) return res.data
@@ -45,10 +46,7 @@ export default function StockPage() {
     }),
   )
 
-  const {isLoading, isError, isSuccess, data, error} = useQuery(
-    'news_list',
-    listNews,
-  )
+  const {isLoading, isSuccess, data} = useQuery('news_list', listNews)
 
   const LAST_INTRADAY = set(add(new Date(), {days: -1}), {
     hours: 9,
@@ -84,7 +82,11 @@ export default function StockPage() {
             </TabsTrigger>
           </TabsList>
           <TabsContent className='tabs-content' value='%5EDJI'>
-            {DOW.isLoading ? <></> : null}
+            {DOW.isLoading ? (
+              <div className='w-full aspect-[2/1] flex justify-center items-center'>
+                <Skeleton className='w-11/12 aspect-[2/1] m-auto' />
+              </div>
+            ) : null}
             {DOW.isSuccess ? (
               <MinuteTrend
                 intraday={DOW.data.filter(({date}: {date: string}) =>
@@ -97,34 +99,34 @@ export default function StockPage() {
             ) : null}
           </TabsContent>
           <TabsContent className='tabs-content' value='%5EGSPC'>
-            {SP500.isLoading ? <></> : null}
+            {SP500.isLoading ? (
+              <div className='w-full aspect-[2/1] flex justify-center items-center'>
+                <Skeleton className='w-11/12 aspect-[2/1] m-auto' />
+              </div>
+            ) : null}
             {SP500.isSuccess ? (
               <MinuteTrend
                 intraday={SP500.data.filter(({date}: {date: string}) =>
                   isAfter(
                     parse(date, 'yyyy-MM-dd HH:mm:ss', new Date()),
-                    parse(
-                      DOW.data.at(0).date,
-                      'yyyy-MM-dd HH:mm:ss',
-                      new Date(),
-                    ).setHours(0, 0, 0, 0),
+                    LAST_INTRADAY,
                   ),
                 )}
               />
             ) : null}
           </TabsContent>
           <TabsContent className='tabs-content' value='%5EIXIC'>
-            {Nasdaq.isLoading ? <></> : null}
+            {Nasdaq.isLoading ? (
+              <div className='w-full aspect-[2/1] flex justify-center items-center'>
+                <Skeleton className='w-11/12 aspect-[2/1] m-auto' />
+              </div>
+            ) : null}
             {Nasdaq.isSuccess ? (
               <MinuteTrend
                 intraday={Nasdaq.data.filter(({date}: {date: string}) =>
                   isAfter(
                     parse(date, 'yyyy-MM-dd HH:mm:ss', new Date()),
-                    parse(
-                      DOW.data.at(0).date,
-                      'yyyy-MM-dd HH:mm:ss',
-                      new Date(),
-                    ).setHours(0, 0, 0, 0),
+                    LAST_INTRADAY,
                   ),
                 )}
               />

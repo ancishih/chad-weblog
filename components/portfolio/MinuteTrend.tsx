@@ -34,7 +34,7 @@ $Chart.register(
 )
 
 export default function MinuteTrend({intraday}: {intraday: MajorIndexData}) {
-  const [selectedItem, setSelectedItem] = React.useState(() => {
+  const [selectedItem] = React.useState(() => {
     return {
       value: intraday.reverse(),
     }
@@ -56,7 +56,7 @@ export default function MinuteTrend({intraday}: {intraday: MajorIndexData}) {
     new Date(),
   )
 
-  const [selectedXMinMax, setSelectedXMinMax] = React.useState(() => {
+  const [selectedXMinMax] = React.useState(() => {
     return {
       min_at: 0,
       max_at: -1,
@@ -87,7 +87,7 @@ export default function MinuteTrend({intraday}: {intraday: MajorIndexData}) {
     gradientStart = 'rgba(214,38,63,0.4)'
     gradientStop = 'rgba(214,38,63,0.1)'
   }
-  console.log(selectedItem.value)
+
   const chartRef = React.useRef<$Chart>(null)
 
   const config: ChartProps<ChartType, DefaultDataPoint<ChartType>> = {
@@ -137,21 +137,20 @@ export default function MinuteTrend({intraday}: {intraday: MajorIndexData}) {
       },
       scales: {
         x: {
-          //@ts-ignore
           type: 'timeseries',
           grid: {
             display: false,
           },
-          //@ts-ignore
+          /* @ts-expect-error type-error with ChartProps<ChartType, DefaultDataPoint<ChartType>> */
           min: selectedXMinMax.min,
-          //@ts-ignore
+          /* @ts-expect-error type-error with ChartProps<ChartType, DefaultDataPoint<ChartType>> */
           max: selectedXMinMax.max,
           time: {
             unit: 'hour',
           },
           ticks: {
             autoSkip: false,
-            //@ts-ignore
+            /* @ts-expect-error type-error with ChartProps<ChartType, DefaultDataPoint<ChartType>> */
             callback: (value: number, index: number) => {
               const allowIndices = [29, 89, 149, 219, 269, 329]
               if (allowIndices.includes(index)) {
@@ -242,11 +241,11 @@ export default function MinuteTrend({intraday}: {intraday: MajorIndexData}) {
     const numOfSegments = width / segments
     const index = Math.floor((x_coord - left) / numOfSegments)
 
-    let yStart = y.getPixelForValue(data.datasets[0].data[index] as number)
+    const yStart = y.getPixelForValue(data.datasets[0].data[index] as number)
 
-    let yEnd = y.getPixelForValue(data.datasets[0].data[index + 1] as number)
+    const yEnd = y.getPixelForValue(data.datasets[0].data[index + 1] as number)
 
-    let yInterpolation =
+    const yInterpolation =
       yStart +
       ((yEnd - yStart) / numOfSegments) *
         (x_coord - x.getPixelForValue(data.labels?.[index] as number))

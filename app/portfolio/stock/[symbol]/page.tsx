@@ -5,7 +5,6 @@ import {
   BalanceSheetData,
   CashFlowData,
   IncomeStatementData,
-  StockProfileData,
   DailyPrice,
   IntradayPriceWithSymbol,
 } from 'Stock'

@@ -7,7 +7,7 @@
     "dev:css": "tailwindcss -i ./app/input.css -o ./app/globals.css -w",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint --no-cache",
     "build:prod": "APP_ENV=prod next build",
     "deploy:prod": "next build && pm2 startOrRestart ecosystem.config.js --env production"
   },

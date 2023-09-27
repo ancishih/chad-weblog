@@ -6,7 +6,6 @@ import {useQuery} from 'react-query'
 import {OtherNews as oNews} from 'Stock'
 import dayjs from '@/utils/dayjs'
 import ArticlePlaceholder from '@/components/portfolio/ArticlePlaceholder'
-import {Separator} from '@/components/ui/Separator'
 import OtherNews from '@/components/portfolio/OtherNews'
 import NewsPlaceholder from '@/components/portfolio/NewsPlaceholder'
 const news = async (id: string) => {
@@ -40,7 +39,7 @@ export default function News({params}: {params: {id: string}}) {
   if (isSuccess) {
     tickers = data?.tickers.split(':')[1] as string
     content.push(`${data?.content[0]} ${data?.content[1]}`)
-    let [, , ...lastsOfContent] = data?.content as string[]
+    const [, , ...lastsOfContent] = data?.content as string[]
     content = [...content, ...lastsOfContent]
   }
   console.log(oData)
