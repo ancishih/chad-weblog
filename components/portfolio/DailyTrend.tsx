@@ -19,10 +19,11 @@ import set from 'date-fns/set'
 import React from 'react'
 import isAfter from 'date-fns/isAfter'
 import {Chart} from 'react-chartjs-2'
+import type {ChartProps} from 'react-chartjs-2'
 import {Listbox} from '@headlessui/react'
 import dayjs from '@/utils/dayjs'
 import {BiChevronDown} from 'react-icons/bi'
-
+import type {ChartType, DefaultDataPoint, TimeScaleOptions} from 'chart.js'
 $Chart.register(
   TimeSeriesScale,
   LinearScale,
@@ -35,9 +36,6 @@ $Chart.register(
   LineController,
   BarController,
 )
-
-$Chart.defaults.font.family =
-  "'FontAwesome', 'Helvetica Neue', 'Arial', sans-serif"
 
 export default function DailyTrend({
   daily,
@@ -105,7 +103,7 @@ export default function DailyTrend({
 
   const chartRef = React.useRef<$Chart>(null)
 
-  const config = {
+  const config: ChartProps<ChartType, DefaultDataPoint<ChartType>> = {
     type: 'bar',
     data: {
       labels: selectedItem.value.map(({time}) =>
@@ -121,7 +119,6 @@ export default function DailyTrend({
             if (!chart.chartArea) return
             const {
               ctx,
-              data,
               chartArea: {top, bottom},
             } = chart
             const gradient = ctx.createLinearGradient(0, top, 0, bottom)
@@ -137,11 +134,7 @@ export default function DailyTrend({
           type: 'bar',
           data: selectedItem.value.map(({volume}) => volume),
           borderColor: '#737373',
-          fill: true,
           backgroundColor: 'rgba(115,115,115,0.8)',
-          pointRadius: 0,
-          pointHoverRadius: 10,
-          pointHitRadius: 0,
           yAxisID: 'volume',
         },
       ],
@@ -157,6 +150,7 @@ export default function DailyTrend({
       },
       scales: {
         x: {
+          //@ts-ignore
           type: 'timeseries',
           grid: {
             display: false,
@@ -164,7 +158,7 @@ export default function DailyTrend({
           ...ticksObject,
           min: selectedXMinMax.min,
           max: selectedXMinMax.max,
-        },
+        } as TimeScaleOptions,
         y: {
           grid: {
             display: false,
@@ -202,9 +196,7 @@ export default function DailyTrend({
     ctx.beginPath()
     ctx.lineWidth = 1
     ctx.strokeStyle = '#828282'
-    // ctx.moveTo(left, top)
-    // ctx.lineTo(right, top)
-    // ctx.stroke()
+
     ctx.setLineDash([3, 3])
     if (
       x_coord >= left &&
@@ -256,7 +248,7 @@ export default function DailyTrend({
     let yInterpolation =
       yStart +
       ((yEnd - yStart) / numOfSegments) *
-        (x_coord - x.getPixelForValue(data.labels[index]))
+        (x_coord - x.getPixelForValue(data.labels?.[index] as number))
     if (
       x_coord >= left &&
       x_coord <= right &&

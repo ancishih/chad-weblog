@@ -137,4 +137,13 @@ declare module 'Stock' {
     header: string[]
     rawdata: string[][][]
   }
+
+  type MajorIndexData = {
+    date: string
+    open: number
+    close: number
+    high: number
+    low: number
+    volume: number
+  }[]
 }

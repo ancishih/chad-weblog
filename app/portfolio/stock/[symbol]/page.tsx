@@ -1,6 +1,6 @@
 'use client'
 import axios from 'axios'
-import {useQueries, QueryObserverSuccessResult} from 'react-query'
+import {useQueries} from 'react-query'
 import {
   BalanceSheetData,
   CashFlowData,
@@ -18,42 +18,42 @@ import StockHeader from '@/components/portfolio/StockHeader'
 import DailyTrend from '@/components/portfolio/DailyTrend'
 import DailyIndicator from '@/components/portfolio/DailyIndicator'
 async function getIntradayPrice(symbol: string) {
-  const res = await axios.get<IntradayPriceWithSymbol>(
+  const res = await axios.get(
     `${process.env.APP_ENDPOINT}/api/v2/stock/price/${symbol}`,
   )
   return res.data
 }
 
 async function getDailyPrice(symbol: string) {
-  const res = await axios.get<DailyPrice>(
+  const res = await axios.get(
     `${process.env.APP_ENDPOINT}/api/stock/price/daily/${symbol}`,
   )
   return res.data
 }
 
 async function getIncomeStatement(symbol: string) {
-  const res = await axios.get<IncomeStatementData>(
+  const res = await axios.get(
     `${process.env.APP_ENDPOINT}/api/stock/income_statement/${symbol}`,
   )
   return res.data
 }
 
 async function getBalanceSheet(symbol: string) {
-  const res = await axios.get<BalanceSheetData>(
+  const res = await axios.get(
     `${process.env.APP_ENDPOINT}/api/stock/balance_sheet/${symbol}`,
   )
   return res.data
 }
 
 async function getCashFlow(symbol: string) {
-  const res = await axios.get<CashFlowData>(
+  const res = await axios.get(
     `${process.env.APP_ENDPOINT}/api/stock/cashflow/${symbol}`,
   )
   return res.data
 }
 
 async function getProfile(symbol: string) {
-  const res = await axios.get<StockProfileData>(
+  const res = await axios.get(
     `${process.env.APP_ENDPOINT}/api/stock/profile/${symbol}`,
   )
   return res.data

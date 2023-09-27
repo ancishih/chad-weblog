@@ -2502,6 +2502,11 @@ a.active {
     padding: 0px;
   }
 
+  .md\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
   .md\:pb-12 {
     padding-bottom: 3rem;
   }
