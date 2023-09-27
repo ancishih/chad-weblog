@@ -66,10 +66,10 @@ export default function Home() {
                 <AiOutlineMail className='text-2xl' />
                 <span className='flex justify-center grow'>連繫我</span>
               </Button>
-              <Button className='flex items-center w-40 h-12 px-6 py-2 mt-4 rounded-lg bg-neutral-400 text-neutral-50'>
+              {/* <Button className='flex items-center w-40 h-12 px-6 py-2 mt-4 rounded-lg bg-neutral-400 text-neutral-50'>
                 <FaFileDownload className='text-2xl' />
                 <span className='flex justify-center grow'>下載</span>
-              </Button>
+              </Button> */}
             </div>
           </div>
         </section>

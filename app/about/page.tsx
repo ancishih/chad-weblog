@@ -17,7 +17,6 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className='container @container p-6 mx-auto text-slate-800'>
-      <div></div>
       <div>
         <h2 className='mt-6 mb-3'>簡介</h2>
         <p className=''>

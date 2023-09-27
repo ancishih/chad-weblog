@@ -89,12 +89,14 @@ export default function StockPage() {
             ) : null}
             {DOW.isSuccess ? (
               <MinuteTrend
-                intraday={DOW.data.filter(({date}: {date: string}) =>
-                  isAfter(
-                    parse(date, 'yyyy-MM-dd HH:mm:ss', new Date()),
-                    LAST_INTRADAY,
-                  ),
-                )}
+                intraday={DOW.data
+                  .filter(({date}: {date: string}) =>
+                    isAfter(
+                      parse(date, 'yyyy-MM-dd HH:mm:ss', new Date()),
+                      LAST_INTRADAY,
+                    ),
+                  )
+                  .reverse()}
               />
             ) : null}
           </TabsContent>
@@ -106,12 +108,14 @@ export default function StockPage() {
             ) : null}
             {SP500.isSuccess ? (
               <MinuteTrend
-                intraday={SP500.data.filter(({date}: {date: string}) =>
-                  isAfter(
-                    parse(date, 'yyyy-MM-dd HH:mm:ss', new Date()),
-                    LAST_INTRADAY,
-                  ),
-                )}
+                intraday={SP500.data
+                  .filter(({date}: {date: string}) =>
+                    isAfter(
+                      parse(date, 'yyyy-MM-dd HH:mm:ss', new Date()),
+                      LAST_INTRADAY,
+                    ),
+                  )
+                  .reverse()}
               />
             ) : null}
           </TabsContent>
@@ -123,12 +127,14 @@ export default function StockPage() {
             ) : null}
             {Nasdaq.isSuccess ? (
               <MinuteTrend
-                intraday={Nasdaq.data.filter(({date}: {date: string}) =>
-                  isAfter(
-                    parse(date, 'yyyy-MM-dd HH:mm:ss', new Date()),
-                    LAST_INTRADAY,
-                  ),
-                )}
+                intraday={Nasdaq.data
+                  .filter(({date}: {date: string}) =>
+                    isAfter(
+                      parse(date, 'yyyy-MM-dd HH:mm:ss', new Date()),
+                      LAST_INTRADAY,
+                    ),
+                  )
+                  .reverse()}
               />
             ) : null}
           </TabsContent>

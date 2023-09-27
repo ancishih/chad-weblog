@@ -34,11 +34,15 @@ $Chart.register(
 )
 
 export default function MinuteTrend({intraday}: {intraday: MajorIndexData}) {
-  const [selectedItem] = React.useState(() => {
+  const [selectedItem, setSelectedItem] = React.useState(() => {
     return {
-      value: intraday.reverse(),
+      value: intraday,
     }
   })
+
+  React.useEffect(() => {
+    setSelectedItem({value: intraday})
+  }, [intraday])
 
   const yMin = Math.min(...selectedItem.value.map(({low}) => low))
 
