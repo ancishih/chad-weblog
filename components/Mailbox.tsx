@@ -9,14 +9,19 @@ import {
   DialogOverlay,
 } from '@/components/ui/Dialog'
 import * as React from 'react'
+import '@/components/mailbox.css'
 import ReactQuill from 'react-quill'
 import {Cross2Icon} from '@radix-ui/react-icons'
 import axios from 'axios'
 import debounce from '@/utils/debounce'
 import $ from 'jquery'
-import './mailbox.css'
 import {useToast} from '@/components/ui/use-toast'
-export default function Mailbox() {
+import cn from '@/utils/cn'
+import {AiOutlineMail} from 'react-icons/ai'
+
+interface Mailbox extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+
+export default function Mailbox({...props}: Mailbox) {
   const ref = React.useRef<ReactQuill>(null)
   const {toast} = useToast()
   const [open, setOpen] = React.useState(false)
@@ -41,19 +46,22 @@ export default function Mailbox() {
   const mailhandler = async () => {
     const isValid = validator()
     if (isValid) {
-    }
-    if (ref && ref.current) {
-      const data = {
-        from: `<${address}>`,
-        subject,
-        body: `${ref.current.getEditor().getText()}, email from ${address}`,
-      }
+      if (ref && ref.current) {
+        const data = {
+          from: `<${address}>`,
+          subject,
+          body: `${ref.current.getEditor().getText()}, email from ${address}`,
+        }
 
-      const res = await axios.post('http://127.0.0.1:9598/api/mail', data)
+        const res = await axios.post(
+          `${process.env.APP_ENDPOINT}/api/mail`,
+          data,
+        )
 
-      if (res.status === 202) {
-        setOpen(false)
-        toast({title: '信件已送出！', description: '我將儘速與您取得聯繫。'})
+        if (res.status === 202) {
+          setOpen(false)
+          toast({title: '信件已送出！', description: '我將儘速與您取得聯繫。'})
+        }
       }
     }
   }
@@ -98,7 +106,10 @@ export default function Mailbox() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>Open</DialogTrigger>
+      <DialogTrigger className={cn(props.className)}>
+        <AiOutlineMail className='text-2xl' />
+        <span className='flex justify-center grow'>連繫我</span>
+      </DialogTrigger>
       <DialogPortal>
         <DialogOverlay className='fixed inset-0 z-50 bg-slate-600/60 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0' />
         <DialogContent

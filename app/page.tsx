@@ -9,12 +9,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/Accordion'
-// import Mailbox from '@/components/Mailbox'
 import {Separator} from '@/components/ui/Separator'
+import React from 'react'
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/Card'
 // icon and image
-import {AiOutlineMail} from 'react-icons/ai'
-import {FaFileDownload} from 'react-icons/fa'
+
 import Me from '@/public/myself.png'
 import Logo from '@/public/logo.png'
 import Github from '@/public/github-mark.png'
@@ -33,7 +32,12 @@ import PostgreSQL from '@/public/postgresql.svg'
 import Git from '@/public/git.svg'
 import Docker from '@/public/docker.svg'
 import NodeIcon from '@/public/nodejs.svg'
+import Stock from '@/public/stock-app.png'
+import WEiZ from '@/public/WEiZ.png'
+import Mailbox from '@/components/Mailbox'
 export default function Home() {
+  const [open, setOpen] = React.useState(false)
+
   return (
     <>
       <header className='sticky top-0 z-10 bg-white shadow-md h-14'>
@@ -59,13 +63,13 @@ export default function Home() {
             />
             <div>
               <span className='leading-8 md:leading-7 md:text-lg md:inline-block lg:max-w-md'>
-                相關工作經驗1.5年，擅長使用React、Tailwind
-                css進行網頁開發。熱衷學習新技術，享受解決問題當下的感覺。
+                相關工作經驗1.5年，擅長使用React、tailwindcss進行網頁開發。熱衷學習新技術，享受解決問題當下的感覺。
               </span>
-              <Button className='flex items-center w-40 h-12 px-6 py-2 mt-8 bg-blue-600 rounded-lg text-neutral-50'>
+              <Mailbox className='flex items-center w-40 h-12 px-6 py-2 mt-8 bg-blue-600 rounded-lg text-neutral-50' />
+              {/* <Button className=''>
                 <AiOutlineMail className='text-2xl' />
                 <span className='flex justify-center grow'>連繫我</span>
-              </Button>
+              </Button> */}
               {/* <Button className='flex items-center w-40 h-12 px-6 py-2 mt-4 rounded-lg bg-neutral-400 text-neutral-50'>
                 <FaFileDownload className='text-2xl' />
                 <span className='flex justify-center grow'>下載</span>
@@ -79,8 +83,8 @@ export default function Home() {
             <Image src={Tool} alt='skill' className='absolute w-9 -left-4' />
             <h3 className='text-3xl font-bold'>技能</h3>
           </div>
-          <div className='flex flex-col gap-3 mt-3 md:flex-row md:flex-wrap'>
-            <Card className='min-w-[15rem]'>
+          <div className='flex flex-col items-center gap-3 mt-3 md:flex-row md:flex-wrap'>
+            <Card className='w-60'>
               <CardHeader>
                 <CardTitle className='font-normal'>程式語言</CardTitle>
               </CardHeader>
@@ -90,7 +94,7 @@ export default function Home() {
                 <Image src={Rust} alt='' className='w-10' />
               </CardContent>
             </Card>
-            <Card className='min-w-[15rem]'>
+            <Card className='w-60'>
               <CardHeader>
                 <CardTitle className='font-normal'>前端</CardTitle>
               </CardHeader>
@@ -101,17 +105,16 @@ export default function Home() {
                 <Image src={Tailwind} alt='' className='w-10' />
               </CardContent>
             </Card>
-            <Card className='min-w-[15rem]'>
+            <Card className='w-60'>
               <CardHeader>
                 <CardTitle className='font-normal'>後端</CardTitle>
               </CardHeader>
               <CardContent className='flex items-center gap-2'>
-                <div>axum</div>
                 <Image src={NodeIcon} alt='' className='w-10' />
                 <Image src={PostgreSQL} alt='' className='w-10' />
               </CardContent>
             </Card>
-            <Card className='min-w-[15rem]'>
+            <Card className='w-60'>
               <CardHeader>
                 <CardTitle className='font-normal'>開發工具</CardTitle>
               </CardHeader>
@@ -124,18 +127,53 @@ export default function Home() {
         </section>
         <Separator className='w-[calc(100%_-_1rem)] mx-auto' />
         <section className='px-4 py-10'>
-          <div className='relative flex flex-row items-center gap-3 px-8 pb-3'>
+          <div className='relative flex flex-row items-center gap-3 px-8 pb-3 mb-4'>
             <Image src={Repo} alt='project' className='absolute w-9 -left-4' />
             <h3 className='text-3xl font-bold'>專案</h3>
           </div>
-          <div className='flex flex-col'>
-            <Card className='ring-0'>
-              <CardHeader>
-                <Link href='/portfolio/stock'>
-                  <CardTitle>stock</CardTitle>
-                </Link>
-              </CardHeader>
-              <CardContent></CardContent>
+          <div className='flex flex-col gap-6 p-4 md:flex-row'>
+            <Card className='transition-transform w-96 ring-1 hover:shadow-lg hover:-translate-y-2'>
+              <Link href='/portfolio/stock'>
+                <CardHeader>
+                  <CardTitle className='text-xl'>Stock-app</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className='flex items-center justify-center'>
+                    <Image src={Stock} className='w-72' alt='my-stock-app' />
+                  </div>
+                  <div className='py-6 text-lg'>
+                    此專案是前後端分離的網站，可查詢美股S&P500公司資料，屬於個人練習寫後端的專案。
+                  </div>
+                  <div className='text-sm'>
+                    使用技術:
+                    <div className='flex flex-row gap-2 my-0.5'>
+                      <Image src={ReactIcon} alt='' className='w-8' />
+                      <Image src={Tailwind} alt='' className='w-8' />
+                      <Image src={PostgreSQL} alt='' className='w-8' />
+                      <Image src={Rust} alt='' className='w-8' />
+                    </div>
+                  </div>
+                </CardContent>
+              </Link>
+            </Card>
+            <Card className='transition-transform w-96 ring-1 hover:shadow-lg hover:-translate-y-2'>
+              <Link href='https://www.weiboltd.com/公司簡介/關於威柏'>
+                <CardHeader>
+                  <CardTitle>威柏WEiZ</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Image className='w-96' src={WEiZ} alt='my-stock-app' />
+                  <div className='py-6 text-lg'>
+                    此專案為前公司承接的案子，單純網頁RWD切版。
+                  </div>
+                  <div className='text-sm'>
+                    使用技術:
+                    <div className='flex flex-row gap-2 my-0.5'>
+                      <Image src={Tailwind} alt='' className='w-8' />
+                    </div>
+                  </div>
+                </CardContent>
+              </Link>
             </Card>
           </div>
         </section>
@@ -162,9 +200,9 @@ export default function Home() {
                 </AccordionTrigger>
                 <AccordionContent>
                   <ol className='flex flex-col gap-2 pl-3 list-decimal list-inside'>
-                    <li>擔任前端工程師，在職期間2021年05月~2022年12月。</li>
+                    <li>擔任前端工程師，在職期間2021年05月初~2022年12月底。</li>
                     <li>
-                      使用Nextjs、Vue 2、TailwindCSS、SCSS等前端技術開發專案。
+                      使用Nextjs、Vue 2、tailwindcss、SCSS等前端技術開發專案。
                     </li>
                     <li>與後端工程師討論資料格式，並串接API。</li>
                     <li>
@@ -198,7 +236,9 @@ export default function Home() {
                 </AccordionTrigger>
                 <AccordionContent>
                   <ol className='flex flex-col gap-2 pl-3 list-decimal list-inside'>
-                    <li>擔任設備製程工程師，在職期間2018年05月~2020年05月。</li>
+                    <li>
+                      擔任設備製程工程師，在職期間2018年05月初~2020年04月底。
+                    </li>
                     <li>負責UV光配向製程設備維護與檢修。</li>
                     <li>
                       <span className='inline-block'>
@@ -209,7 +249,7 @@ export default function Home() {
                           與產品設計師配合進行DOE實驗&#40;四種產品&#41;，重新訂產品參數。
                         </li>
                         <li>
-                          專案成果&#58;兩種產品通過批量量產，，增加約30%的產能，改善產能瓶頸。
+                          專案成果&#58;兩種產品通過批量量產，增加約30%的產能，改善產能瓶頸。
                         </li>
                       </ul>
                     </li>
