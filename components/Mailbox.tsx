@@ -10,7 +10,8 @@ import {
 } from '@/components/ui/Dialog'
 import * as React from 'react'
 import '@/components/mailbox.css'
-import ReactQuill from 'react-quill'
+import dynamic from 'next/dynamic'
+// import ReactQuill from 'react-quill'
 import {Cross2Icon} from '@radix-ui/react-icons'
 import axios from 'axios'
 import debounce from '@/utils/debounce'
@@ -22,7 +23,12 @@ import {AiOutlineMail} from 'react-icons/ai'
 interface Mailbox extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export default function Mailbox({...props}: Mailbox) {
-  const ref = React.useRef<ReactQuill>(null)
+  const ReactQuill = dynamic(import('react-quill'), {
+    ssr: false,
+    loading: () => <p>Loading...</p>,
+  })
+
+  const ref = React.useRef(null)
   const {toast} = useToast()
   const [open, setOpen] = React.useState(false)
 
@@ -50,6 +56,7 @@ export default function Mailbox({...props}: Mailbox) {
         const data = {
           from: `<${address}>`,
           subject,
+          /* @ts-expect-error type-error */
           body: `${ref.current.getEditor().getText()}, email from ${address}`,
         }
 
@@ -78,6 +85,7 @@ export default function Mailbox({...props}: Mailbox) {
       bool = false
     }
     if (ref && ref.current) {
+      /* @ts-expect-error type-error */
       if (ref.current.getEditor().getLength() === 1) {
         $('.ql-container.ql-snow').addClass('border-red-500')
         setContentStatus(true)
@@ -159,6 +167,7 @@ export default function Mailbox({...props}: Mailbox) {
               <ReactQuill
                 id='quill'
                 className='h-fit'
+                /* @ts-expect-error type-error */
                 ref={ref}
                 theme='snow'
                 value={content}

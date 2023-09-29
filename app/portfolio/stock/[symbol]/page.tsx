@@ -1,12 +1,13 @@
 'use client'
 import axios from 'axios'
-import {useQueries} from 'react-query'
+import {useQueries} from '@tanstack/react-query'
 import {
   BalanceSheetData,
   CashFlowData,
   IncomeStatementData,
   DailyPrice,
   IntradayPriceWithSymbol,
+  StockProfileData,
 } from 'Stock'
 import React from 'react'
 import DataTable from '@/components/DataTable'
@@ -17,27 +18,27 @@ import StockHeader from '@/components/portfolio/StockHeader'
 import DailyTrend from '@/components/portfolio/DailyTrend'
 import DailyIndicator from '@/components/portfolio/DailyIndicator'
 async function getIntradayPrice(symbol: string) {
-  const res = await axios.get(
+  const res = await axios.get<IntradayPriceWithSymbol>(
     `${process.env.APP_ENDPOINT}/api/v2/stock/price/${symbol}`,
   )
   return res.data
 }
 
-async function getDailyPrice(symbol: string) {
+async function getDailyPrice<DailyPrice>(symbol: string) {
   const res = await axios.get(
     `${process.env.APP_ENDPOINT}/api/stock/price/daily/${symbol}`,
   )
   return res.data
 }
 
-async function getIncomeStatement(symbol: string) {
+async function getIncomeStatement<IncomeStatementData>(symbol: string) {
   const res = await axios.get(
     `${process.env.APP_ENDPOINT}/api/stock/income_statement/${symbol}`,
   )
   return res.data
 }
 
-async function getBalanceSheet(symbol: string) {
+async function getBalanceSheet<BalanceSheetData>(symbol: string) {
   const res = await axios.get(
     `${process.env.APP_ENDPOINT}/api/stock/balance_sheet/${symbol}`,
   )
@@ -45,13 +46,13 @@ async function getBalanceSheet(symbol: string) {
 }
 
 async function getCashFlow(symbol: string) {
-  const res = await axios.get(
+  const res = await axios.get<CashFlowData>(
     `${process.env.APP_ENDPOINT}/api/stock/cashflow/${symbol}`,
   )
   return res.data
 }
 
-async function getProfile(symbol: string) {
+async function getProfile<StockProfileData>(symbol: string) {
   const res = await axios.get(
     `${process.env.APP_ENDPOINT}/api/stock/profile/${symbol}`,
   )
@@ -75,14 +76,14 @@ export default function Tickers({params}: {params: {symbol: string}}) {
     balanceSheet,
     cashflow,
     profile,
-  ] = useQueries(
-    QUERIES_FUNCTIONS.map(fn => {
+  ] = useQueries({
+    queries: QUERIES_FUNCTIONS.map(fn => {
       return {
         queryKey: [fn.name, params.symbol],
         queryFn: () => fn(params.symbol),
       }
     }),
-  )
+  })
 
   return (
     <>
@@ -97,11 +98,9 @@ export default function Tickers({params}: {params: {symbol: string}}) {
           <div className='pt-12 line-chart-container-mobile md:line-chart-container md:pb-12'>
             <DailyTrend
               daily={dailyPrice.data as DailyPrice}
-              intraday={intradyPrice.data as IntradayPriceWithSymbol}
+              intraday={intradyPrice.data}
             />
-            <DailyIndicator
-              data={intradyPrice.data as IntradayPriceWithSymbol}
-            />
+            <DailyIndicator data={intradyPrice.data} />
           </div>
         ) : null}
         <Tabs defaultValue='income_statement'>
@@ -138,7 +137,7 @@ export default function Tickers({params}: {params: {symbol: string}}) {
           >
             {incomeStatement.isLoading ? <div>loading</div> : null}
             {incomeStatement.isSuccess ? (
-              <DataTable data={incomeStatement.data as IncomeStatementData} />
+              <DataTable data={incomeStatement.data} />
             ) : null}
           </TabsContent>
           <TabsContent
@@ -148,7 +147,7 @@ export default function Tickers({params}: {params: {symbol: string}}) {
           >
             {balanceSheet.isLoading ? <div>loading</div> : null}
             {balanceSheet.isSuccess ? (
-              <DataTable data={balanceSheet.data as BalanceSheetData} />
+              <DataTable data={balanceSheet.data} />
             ) : null}
           </TabsContent>
           <TabsContent
@@ -157,9 +156,7 @@ export default function Tickers({params}: {params: {symbol: string}}) {
             value='cashflow'
           >
             {cashflow.isLoading ? <div>loading</div> : null}
-            {cashflow.isSuccess ? (
-              <DataTable data={cashflow.data as CashFlowData} />
-            ) : null}
+            {cashflow.isSuccess ? <DataTable data={cashflow.data} /> : null}
           </TabsContent>
           <TabsContent
             tabIndex={-1}

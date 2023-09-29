@@ -1,7 +1,7 @@
-'use client'
+// 'use client'
 // components
 import Link from 'next/link'
-import Button from '@/components/Button'
+// import Button from '@/components/Button'
 import Image from 'next/image'
 import {
   Accordion,
@@ -10,7 +10,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/Accordion'
 import {Separator} from '@/components/ui/Separator'
-import React from 'react'
+// import React from 'react'
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/Card'
 // icon and image
 
@@ -36,8 +36,6 @@ import Stock from '@/public/stock-app.png'
 import WEiZ from '@/public/WEiZ.png'
 import Mailbox from '@/components/Mailbox'
 export default function Home() {
-  const [open, setOpen] = React.useState(false)
-
   return (
     <>
       <header className='sticky top-0 z-10 bg-white shadow-md h-14'>

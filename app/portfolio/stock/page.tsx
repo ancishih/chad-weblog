@@ -6,14 +6,13 @@ import MinuteTrend from '@/components/portfolio/MinuteTrend'
 import {News} from 'Stock'
 import NewsCard from '@/components/portfolio/NewsCard'
 import CardPlaceholder from '@/components/portfolio/CardPlaceholder'
-import {useQueries, useQuery} from 'react-query'
+import {useQueries, useQuery} from '@tanstack/react-query'
 import StockHeader from '@/components/portfolio/StockHeader'
 import parse from 'date-fns/parse'
 import isAfter from 'date-fns/isAfter'
 import set from 'date-fns/set'
 import add from 'date-fns/add'
 import Skeleton from '@/components/ui/Skeleton'
-// import
 
 const listNews = async () => {
   try {
@@ -27,7 +26,7 @@ const listNews = async () => {
   }
 }
 
-const getMajorIndexes = async (symbol: string) => {
+const getMajorIndices = async (symbol: string) => {
   const res = await axios.get(
     `${process.env.FMP_BASE_URL}/api/v3/historical-chart/1min/${symbol}?apikey=${process.env.FMP_APIKEY}`,
   )
@@ -35,26 +34,27 @@ const getMajorIndexes = async (symbol: string) => {
 }
 
 export default function StockPage() {
-  const indexes = ['%5EDJI', '%5EGSPC', '%5EIXIC']
+  const indices = ['%5EDJI', '%5EGSPC', '%5EIXIC']
 
-  const [DOW, SP500, Nasdaq] = useQueries(
-    indexes.map(index => {
+  const [DOW, SP500, Nasdaq] = useQueries({
+    queries: indices.map(index => {
       return {
         queryKey: ['index', index],
-        queryFn: () => getMajorIndexes(index),
+        queryFn: () => getMajorIndices(index),
       }
     }),
-  )
+  })
 
-  const {isLoading, isSuccess, data} = useQuery('news_list', listNews)
+  const {isLoading, isSuccess, data} = useQuery({
+    queryKey: ['news_list'],
+    queryFn: listNews,
+  })
 
   const LAST_INTRADAY = set(add(new Date(), {days: -1}), {
     hours: 9,
     minutes: 29,
     seconds: 0,
   })
-
-  console.log(DOW, SP500, Nasdaq)
 
   return (
     <>
@@ -144,83 +144,14 @@ export default function StockPage() {
       <section className='py-10 gap-x-6'>
         <h3 className='mb-4 text-3xl'>Latest News</h3>
         <div className='flex flex-wrap justify-around gap-y-8 md:[&>:first-child]:w-[720px]'>
-          {isLoading ? (
-            <>
-              {Array.from({length: 10}).map((_, i) => (
+          {isLoading
+            ? Array.from({length: 10}).map((_, i) => (
                 <CardPlaceholder key={i} />
-              ))}
-            </>
-          ) : null}
-          {isSuccess ? (
-            <>
-              {data?.map(i => (
-                <NewsCard key={i.id} {...i} />
-              ))}
-            </>
-          ) : null}
+              ))
+            : null}
+          {isSuccess ? data?.map(i => <NewsCard key={i.id} {...i} />) : null}
         </div>
       </section>
     </>
   )
 }
-
-//types
-// import {HistoricalPrice} from 'Stock'
-
-// function Plot({index}: {index: string}) {
-//   const options = {
-//     layout: {
-//       padding: 20,
-//     },
-//     responsive: true,
-//     elements: {
-//       point: {
-//         pointStyle: false,
-//       },
-//     },
-//     scales: {
-//       x: {
-//         type: 'timeseries',
-//         time: {
-//           unit: 'hour',
-//           displayFormats: {
-//             hour: 'HH:mm',
-//           },
-//         },
-//         ticks: {
-//           maxTicksLimit: 13,
-//         },
-//       },
-//     },
-//   }
-
-//   const dt = (d: string): boolean => {
-//     let date = dateParser(d, 'yyyy-MM-dd HH:mm:SS', new Date(1970, 1, 1))
-//     return isAfter(date, new Date('2023-09-01'))
-//   }
-
-//   const getData = suspend(async () => {
-//     const res = await axios.get(
-//       `${process.env.FMP_BASE_URL}/api/v3/historical-chart/1min/${index}?apikey=${process.env.FMP_APIKEY}`,
-//     )
-
-//     let labels = res.data
-//       .filter(({date}: {date: string}) => dt(date))
-//       .map(({date}: {date: string}) => date)
-//       .reverse()
-//     let data = res.data.map(({close}: {close: number}) => close).reverse()
-
-//     return {labels, data}
-//   }, [index])
-
-//   return (
-//     <div className='max-w-xl'>
-//       <Line
-//         options={options}
-//         data={{labels: getData.labels, datasets: [{data: getData.data}]}}
-//         width='400'
-//         height='300'
-//       />
-//     </div>
-//   )
-// }

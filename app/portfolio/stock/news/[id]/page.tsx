@@ -2,7 +2,7 @@
 import React from 'react'
 import axios from 'axios'
 import {News} from 'Stock'
-import {useQuery} from 'react-query'
+import {useQuery} from '@tanstack/react-query'
 import {OtherNews as oNews} from 'Stock'
 import dayjs from '@/utils/dayjs'
 import ArticlePlaceholder from '@/components/portfolio/ArticlePlaceholder'
@@ -42,7 +42,7 @@ export default function News({params}: {params: {id: string}}) {
     const [, , ...lastsOfContent] = data?.content as string[]
     content = [...content, ...lastsOfContent]
   }
-  console.log(oData)
+
   return (
     <div className='min-h-[calc(100vh_-_56px)] py-20'>
       <>{isLoading ? <ArticlePlaceholder /> : null}</>
@@ -73,24 +73,20 @@ export default function News({params}: {params: {id: string}}) {
       </>
 
       <div className='mb-6 text-3xl font-bold'>Other News</div>
-      <>
-        {oIsLoading ? (
-          <div className='flex flex-row flex-wrap justify-around w-full gap-4'>
-            {Array.from({length: 3}).map((_, i) => (
-              <NewsPlaceholder key={i} />
-            ))}
-          </div>
-        ) : null}
-      </>
-      <>
-        {oIsSuccess ? (
-          <div className='flex flex-row flex-wrap w-full gap-4 px-10 xl:p-0'>
-            {oData?.map(i => (
-              <OtherNews key={i.id} {...i} />
-            ))}
-          </div>
-        ) : null}
-      </>
+      {oIsLoading ? (
+        <div className='flex flex-row flex-wrap justify-around w-full gap-4'>
+          {Array.from({length: 3}).map((_, i) => (
+            <NewsPlaceholder key={i} />
+          ))}
+        </div>
+      ) : null}
+      {oIsSuccess ? (
+        <div className='flex flex-row flex-wrap w-full gap-4 px-10 xl:p-0'>
+          {oData?.map(i => (
+            <OtherNews key={i.id} {...i} />
+          ))}
+        </div>
+      ) : null}
     </div>
   )
 }

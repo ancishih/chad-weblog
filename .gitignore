@@ -39,11 +39,7 @@ next-env.d.ts
 
 /target
 /analyze
-/.github
-Dockerfile
-ecosystem.config.js
-next.config.js
-/public
+
 /mdx
 /components/blog
 /icons
