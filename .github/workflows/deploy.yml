@@ -1,10 +1,29 @@
 name: Deploy to AWS EC2
 env:
   AWS_REGION: ap-northeast-1
+permissions:
+  id-token: write
+  contents: read
 on:
   push:
     branches: [main]
 jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurate AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ap-northeast-1
+          role-to-assume: arn:aws:iam::${{secrets.AWS_ACCOUNT_ID}}:role/GitHubAction-AssumeRoleWithAction
+      - name: Sts GetCallerIdentity
+        run: |
+          aws sts get-caller-identity
   # build:
   #   runs-on: ubuntu-latest
   #   environment: production
@@ -28,24 +47,3 @@ jobs:
   #         file: ./Dockerfile
   #         push: true
   #         tags: ${{ secrets.DOCKERHUB_USERNAME }}/chad-weblog:latest
-  deploy:
-    permissions:
-      id-token: write
-      contents: read
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Configurate AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-session-name: GitHub_to_AWS_via_FederatedOIDC
-          aws-region: ${{env.AWS_REGION}}
-          role-to-assume:
-            arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID
-            }}:role/GitHubAction-AssumeRoleWithAction
-      - name: Sts GetCallerIdentity
-        run: |
-          aws sts get-caller-identity
