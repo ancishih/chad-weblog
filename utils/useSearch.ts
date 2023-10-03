@@ -6,7 +6,7 @@ async function getSymbolLists(str: string, pageParam = 1, options = {}) {
   let from = (pageParam - 1) * 10
   let to = pageParam * 10
   const res = await axios.get<{symbol_list: SymbolsWithTotalRow}>(
-    `${process.env.NEXT_PUBLIC_APP_ENDPOINT}/api/stock/symbol/${str}?from=${from}&to=${to}`,
+    `${process.env.APP_ENDPOINT}/api/stock/symbol/${str}?from=${from}&to=${to}`,
     options,
   )
   return res.data

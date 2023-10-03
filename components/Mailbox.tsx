@@ -61,7 +61,7 @@ export default function Mailbox({...props}: Mailbox) {
         }
 
         const res = await axios.post(
-          `${process.env.NEXT_PUBLIC_APP_ENDPOINT}/api/mail`,
+          `${process.env.APP_ENDPOINT}/api/mail`,
           data,
         )
 
