@@ -9,7 +9,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY --link entrypoint.sh ecosystem.config.js next.config.js package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+COPY --link ecosystem.config.js next.config.js package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
@@ -44,7 +44,7 @@ COPY --from=builder --link /app/public ./public
 COPY --from=builder --link --chown=1001:1001 /app/.next/standalone ./
 COPY --from=builder --link --chown=1001:1001 /app/.next/static ./.next/static
 COPY --from=builder --link --chown=1001:1001 /app/ecosystem.config.js ./
-# COPY --from=builder /app/entrypoint.sh ./
+
 # USER nextjs
 ENV NEXT_TELEMETRY_DISABLED=1
 
