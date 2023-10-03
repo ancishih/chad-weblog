@@ -19,42 +19,42 @@ import DailyTrend from '@/components/portfolio/DailyTrend'
 import DailyIndicator from '@/components/portfolio/DailyIndicator'
 async function getIntradayPrice(symbol: string) {
   const res = await axios.get<IntradayPriceWithSymbol>(
-    `${process.env.NEXT_PUBLIC_APP_ENDPOINT}/api/v2/stock/price/${symbol}`,
+    `${process.env.APP_ENDPOINT}/api/v2/stock/price/${symbol}`,
   )
   return res.data
 }
 
 async function getDailyPrice<DailyPrice>(symbol: string) {
   const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_APP_ENDPOINT}/api/stock/price/daily/${symbol}`,
+    `${process.env.APP_ENDPOINT}/api/stock/price/daily/${symbol}`,
   )
   return res.data
 }
 
 async function getIncomeStatement<IncomeStatementData>(symbol: string) {
   const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_APP_ENDPOINT}/api/stock/income_statement/${symbol}`,
+    `${process.env.APP_ENDPOINT}/api/stock/income_statement/${symbol}`,
   )
   return res.data
 }
 
 async function getBalanceSheet<BalanceSheetData>(symbol: string) {
   const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_APP_ENDPOINT}/api/stock/balance_sheet/${symbol}`,
+    `${process.env.APP_ENDPOINT}/api/stock/balance_sheet/${symbol}`,
   )
   return res.data
 }
 
 async function getCashFlow(symbol: string) {
   const res = await axios.get<CashFlowData>(
-    `${process.env.NEXT_PUBLIC_APP_ENDPOINT}/api/stock/cashflow/${symbol}`,
+    `${process.env.APP_ENDPOINT}/api/stock/cashflow/${symbol}`,
   )
   return res.data
 }
 
 async function getProfile<StockProfileData>(symbol: string) {
   const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_APP_ENDPOINT}/api/stock/profile/${symbol}`,
+    `${process.env.APP_ENDPOINT}/api/stock/profile/${symbol}`,
   )
   return res.data
 }

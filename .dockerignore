@@ -5,3 +5,4 @@
 /mdx
 /README.md
 .env.local
+*.sh
