@@ -30,4 +30,8 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+          build-args: |
+            APP_ENDPOINT=${{secrets.APP_ENDPOINT}}
+            BASE_URL=${{secrets.BASE_URL}}
+            APIKEY=${{secrets.APIKEY}}
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/chad-weblog:latest

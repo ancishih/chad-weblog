@@ -17,7 +17,7 @@ import Skeleton from '@/components/ui/Skeleton'
 const listNews = async () => {
   try {
     const res = await axios.get<News[]>(
-      `${process.env.NEXT_PUBLIC_APP_ENDPOINT}/api/stock/news`,
+      `${process.env.APP_ENDPOINT}/api/stock/news`,
     )
 
     if (res.status === 200) return res.data
@@ -28,7 +28,7 @@ const listNews = async () => {
 
 const getMajorIndices = async (symbol: string) => {
   const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v3/historical-chart/1min/${symbol}?apikey=${process.env.APIKEY}`,
+    `${process.env.BASE_URL}/api/v3/historical-chart/1min/${symbol}?apikey=${process.env.APIKEY}`,
   )
   if (res.status === 200) return res.data
 }

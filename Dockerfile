@@ -23,6 +23,13 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps --link /app/node_modules ./node_modules
 COPY --link . .
+
+ARG APP_ENDPOINT
+ARG APIKEY
+ARG BASE_URL
+ENV APP_ENDPOINT ${APP_ENDPOINT}
+ENV APIKEY ${APIKEY}
+ENV BASE_URL ${BASE_URL}
 # This will do the trick, use the corresponding env file for each environment.
 RUN npm install -g npm@10.1.0
 RUN npm run build
