@@ -4,3 +4,4 @@
 .gitignore
 /mdx
 /README.md
+.env.local
