@@ -10,14 +10,14 @@ import OtherNews from '@/components/portfolio/OtherNews'
 import NewsPlaceholder from '@/components/portfolio/NewsPlaceholder'
 const news = async (id: string) => {
   const res = await axios.get<News>(
-    `${process.env.NEXT_PUBLIC_APP_ENDPOINT}/api/stock/news/${id}`,
+    `${process.env.APP_ENDPOINT}/api/stock/news/${id}`,
   )
   if (res.status == 200) return res.data
 }
 
 const otherNews = async (id: string) => {
   const res = await axios.post<oNews[]>(
-    `${process.env.NEXT_PUBLIC_APP_ENDPOINT}/api/stock/news/${id}`,
+    `${process.env.APP_ENDPOINT}/api/stock/news/${id}`,
   )
   if (res.status === 200) return res.data
 }
