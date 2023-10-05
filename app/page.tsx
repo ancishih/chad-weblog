@@ -81,8 +81,8 @@ export default function Home() {
             <Image src={Tool} alt='skill' className='absolute w-9 -left-4' />
             <h3 className='text-3xl font-bold'>技能</h3>
           </div>
-          <div className='flex flex-col items-center gap-3 mt-3 md:flex-row md:flex-wrap'>
-            <Card className='w-60'>
+          <div className='flex flex-col items-center gap-6 mt-3 md:flex-row md:flex-wrap'>
+            <Card className='w-64'>
               <CardHeader>
                 <CardTitle className='font-normal'>程式語言</CardTitle>
               </CardHeader>
@@ -92,7 +92,7 @@ export default function Home() {
                 <Image src={Rust} alt='' className='w-10' />
               </CardContent>
             </Card>
-            <Card className='w-60'>
+            <Card className='w-64'>
               <CardHeader>
                 <CardTitle className='font-normal'>前端</CardTitle>
               </CardHeader>
@@ -103,7 +103,7 @@ export default function Home() {
                 <Image src={Tailwind} alt='' className='w-10' />
               </CardContent>
             </Card>
-            <Card className='w-60'>
+            <Card className='w-64'>
               <CardHeader>
                 <CardTitle className='font-normal'>後端</CardTitle>
               </CardHeader>
@@ -112,7 +112,7 @@ export default function Home() {
                 <Image src={PostgreSQL} alt='' className='w-10' />
               </CardContent>
             </Card>
-            <Card className='w-60'>
+            <Card className='w-64'>
               <CardHeader>
                 <CardTitle className='font-normal'>開發工具</CardTitle>
               </CardHeader>
@@ -129,8 +129,8 @@ export default function Home() {
             <Image src={Repo} alt='project' className='absolute w-9 -left-4' />
             <h3 className='text-3xl font-bold'>專案</h3>
           </div>
-          <div className='flex flex-col gap-6 p-4 md:flex-row'>
-            <Card className='transition-transform w-96 ring-1 hover:shadow-lg hover:-translate-y-2'>
+          <div className='flex flex-col gap-6 md:flex-row'>
+            <Card className='w-64 transition-transform ring-1 hover:shadow-lg hover:-translate-y-2'>
               <Link href='/portfolio/stock'>
                 <CardHeader>
                   <CardTitle className='text-xl'>Stock-app</CardTitle>
@@ -154,7 +154,7 @@ export default function Home() {
                 </CardContent>
               </Link>
             </Card>
-            <Card className='transition-transform w-96 ring-1 hover:shadow-lg hover:-translate-y-2'>
+            <Card className='w-64 transition-transform ring-1 hover:shadow-lg hover:-translate-y-2'>
               <Link href='https://www.weiboltd.com/公司簡介/關於威柏'>
                 <CardHeader>
                   <CardTitle>威柏WEiZ</CardTitle>
