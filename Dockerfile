@@ -30,6 +30,8 @@ ARG BASE_URL
 ENV APP_ENDPOINT ${APP_ENDPOINT}
 ENV APIKEY ${APIKEY}
 ENV BASE_URL ${BASE_URL}
+
+RUN echo $APP_ENDPOINT > app_endpoint
 # This will do the trick, use the corresponding env file for each environment.
 RUN npm install -g npm@10.1.0
 RUN npm run build
