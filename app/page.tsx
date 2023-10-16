@@ -1,7 +1,6 @@
 // 'use client'
 // components
 import Link from 'next/link'
-// import Button from '@/components/Button'
 import Image from 'next/image'
 import {
   Accordion,
@@ -10,9 +9,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/Accordion'
 import {Separator} from '@/components/ui/Separator'
-// import React from 'react'
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/Card'
-// icon and image
 
 import Me from '@/public/myself.png'
 import Logo from '@/public/logo.png'
@@ -129,18 +126,18 @@ export default function Home() {
             <Image src={Repo} alt='project' className='absolute w-9 -left-4' />
             <h3 className='text-3xl font-bold'>專案</h3>
           </div>
-          <div className='flex flex-col gap-6 md:flex-row'>
-            <Card className='w-64 transition-transform ring-1 hover:shadow-lg hover:-translate-y-2'>
-              <Link href='/portfolio/stock'>
+          <div className='flex flex-col items-center gap-6 md:flex-row'>
+            <Link href='/portfolio/stock'>
+              <Card className='w-64 flex flex-col justify-between transition-transform h-[26rem] ring-1 hover:shadow-lg hover:-translate-y-2'>
                 <CardHeader>
                   <CardTitle className='text-xl'>Stock-app</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className='flex items-center justify-center'>
-                    <Image src={Stock} className='w-72' alt='my-stock-app' />
+                  <div className='flex items-center justify-center sm:items-baseline'>
+                    <Image src={Stock} className='w-full' alt='my-stock-app' />
                   </div>
                   <div className='py-6 text-lg'>
-                    此專案是前後端分離的網站，可查詢美股S&P500公司資料，屬於個人練習寫後端的專案。
+                    個人專案是前後端分離的網站，可查詢美股S&P500公司資料。
                   </div>
                   <div className='text-sm'>
                     使用技術:
@@ -152,15 +149,15 @@ export default function Home() {
                     </div>
                   </div>
                 </CardContent>
-              </Link>
-            </Card>
-            <Card className='w-64 transition-transform ring-1 hover:shadow-lg hover:-translate-y-2'>
-              <Link href='https://www.weiboltd.com/公司簡介/關於威柏'>
+              </Card>
+            </Link>
+            <Link href='https://www.weiboltd.com/公司簡介/關於威柏'>
+              <Card className='flex flex-col justify-between w-64 h-[26rem] transition-transform ring-1 hover:shadow-lg hover:-translate-y-2'>
                 <CardHeader>
                   <CardTitle>威柏WEiZ</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <Image className='w-96' src={WEiZ} alt='my-stock-app' />
+                  <Image className='w-full' src={WEiZ} alt='my-stock-app' />
                   <div className='py-6 text-lg'>
                     此專案為前公司承接的案子，單純網頁RWD切版。
                   </div>
@@ -171,8 +168,8 @@ export default function Home() {
                     </div>
                   </div>
                 </CardContent>
-              </Link>
-            </Card>
+              </Card>
+            </Link>
           </div>
         </section>
         <Separator className='w-[calc(100%_-_1rem)] mx-auto' />

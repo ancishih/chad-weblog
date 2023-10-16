@@ -10,27 +10,23 @@ import {
 } from '@/components/ui/Dialog'
 import * as React from 'react'
 import '@/components/mailbox.css'
-import dynamic from 'next/dynamic'
-// import ReactQuill from 'react-quill'
 import {Cross2Icon} from '@radix-ui/react-icons'
 import axios from 'axios'
 import debounce from '@/utils/debounce'
-import $ from 'jquery'
 import {useToast} from '@/components/ui/use-toast'
 import cn from '@/utils/cn'
 import {AiOutlineMail} from 'react-icons/ai'
+import {Editor, EditorState} from 'draft-js'
 
 interface Mailbox extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export default function Mailbox({...props}: Mailbox) {
-  const ReactQuill = dynamic(import('react-quill'), {
-    ssr: false,
-    loading: () => <p>Loading...</p>,
-  })
-
-  const ref = React.useRef(null)
   const {toast} = useToast()
   const [open, setOpen] = React.useState(false)
+
+  const [editorState, setEditorState] = React.useState(() =>
+    EditorState.createEmpty(),
+  )
 
   const [address, setAddress] = React.useState('')
   const [content, setContent] = React.useState('')
@@ -52,23 +48,19 @@ export default function Mailbox({...props}: Mailbox) {
   const mailhandler = async () => {
     const isValid = validator()
     if (isValid) {
-      if (ref && ref.current) {
-        const data = {
-          from: `<${address}>`,
-          subject,
-          /* @ts-expect-error type-error */
-          body: `${ref.current.getEditor().getText()}, email from ${address}`,
-        }
+      const data = {
+        from: `<${address}>`,
+        subject,
+        body: `${editorState
+          .getCurrentContent()
+          .getPlainText()}, email from ${address}`,
+      }
 
-        const res = await axios.post(
-          `${process.env.APP_ENDPOINT}/api/mail`,
-          data,
-        )
+      const res = await axios.post(`${process.env.APP_ENDPOINT}/api/mail`, data)
 
-        if (res.status === 202) {
-          setOpen(false)
-          toast({title: '信件已送出！', description: '我將儘速與您取得聯繫。'})
-        }
+      if (res.status === 202) {
+        setOpen(false)
+        toast({title: '信件已送出！', description: '我將儘速與您取得聯繫。'})
       }
     }
   }
@@ -80,17 +72,14 @@ export default function Mailbox({...props}: Mailbox) {
       setAddressStatus(true)
       bool = false
     }
+
     if (subject.length === 0) {
       setSubjectStatus(true)
       bool = false
     }
-    if (ref && ref.current) {
-      /* @ts-expect-error type-error */
-      if (ref.current.getEditor().getLength() === 1) {
-        $('.ql-container.ql-snow').addClass('border-red-500')
-        setContentStatus(true)
-        bool = false
-      }
+    if (editorState.getCurrentContent().getPlainText().length === 0) {
+      setContentStatus(true)
+      bool = false
     }
     return bool
   }
@@ -160,24 +149,10 @@ export default function Mailbox({...props}: Mailbox) {
             </div>
           </div>
           <div
+            className='relative h-40 p-2 rounded-md ring-1 ring-slate-400 [&[data-error=true]:before]:content-["請輸入內文"] [&[data-error=true]:before]:absolute [&[data-error=true]:before]:left-4 [&[data-error=true]:before]:top-[0rem] [&[data-error=true]:before]:text-red-500'
             data-error={contentStatus}
-            className='relative [&[data-error=true]:before]:content-["請輸入內文"] [&[data-error=true]:before]:absolute [&[data-error=true]:before]:left-4 [&[data-error=true]:before]:top-[3.25rem] [&[data-error=true]:before]:text-red-500'
           >
-            {typeof document !== 'undefined' ? (
-              <ReactQuill
-                id='quill'
-                className='h-fit'
-                /* @ts-expect-error type-error */
-                ref={ref}
-                theme='snow'
-                value={content}
-                onChange={setContent}
-                onKeyDown={() => {
-                  $('.ql-container.ql-snow').removeClass('border-red-500')
-                  setContentStatus(false)
-                }}
-              />
-            ) : null}
+            <Editor editorState={editorState} onChange={setEditorState} />
           </div>
           <DialogFooter className='self-end h-9'>
             <button
