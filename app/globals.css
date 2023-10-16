@@ -894,6 +894,10 @@ p {
   height: 1rem;
 }
 
+.h-40 {
+  height: 10rem;
+}
+
 .h-5 {
   height: 1.25rem;
 }
@@ -936,10 +940,6 @@ p {
 
 .h-full {
   height: 100%;
-}
-
-.h-40 {
-  height: 10rem;
 }
 
 .max-h-\[32\.5rem\] {
@@ -1417,11 +1417,6 @@ p {
   border-color: rgb(38 38 38 / var(--tw-border-opacity));
 }
 
-.border-red-500 {
-  --tw-border-opacity: 1;
-  border-color: rgb(239 68 68 / var(--tw-border-opacity));
-}
-
 .border-slate-200 {
   --tw-border-opacity: 1;
   border-color: rgb(226 232 240 / var(--tw-border-opacity));
@@ -1514,6 +1509,10 @@ p {
   padding: 0.375rem;
 }
 
+.p-2 {
+  padding: 0.5rem;
+}
+
 .p-4 {
   padding: 1rem;
 }
@@ -1524,10 +1523,6 @@ p {
 
 .p-\[1px\] {
   padding: 1px;
-}
-
-.p-2 {
-  padding: 0.5rem;
 }
 
 .px-0 {
@@ -2710,14 +2705,6 @@ a.active {
   right: 0.5rem;
 }
 
-.\[\&\[data-error\=true\]\:after\]\:top-\[3\.25rem\][data-error=true]:after {
-  top: 3.25rem;
-}
-
-.\[\&\[data-error\=true\]\:after\]\:left-4[data-error=true]:after {
-  left: 1rem;
-}
-
 .\[\&\[data-error\=true\]\:after\]\:text-red-500[data-error=true]:after {
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
@@ -2733,11 +2720,6 @@ a.active {
   content: var(--tw-content);
 }
 
-.\[\&\[data-error\=true\]\:after\]\:content-\[\"\8ACB\8F38\5165\5167\6587\"\][data-error=true]:after {
-  --tw-content: "請輸入內文";
-  content: var(--tw-content);
-}
-
 .\[\&\[data-error\=true\]\:before\]\:absolute[data-error=true]:before {
   position: absolute;
 }
@@ -2746,12 +2728,20 @@ a.active {
   left: 1rem;
 }
 
-.\[\&\[data-error\=true\]\:before\]\:top-\[3\.25rem\][data-error=true]:before {
-  top: 3.25rem;
-}
-
 .\[\&\[data-error\=true\]\:before\]\:top-\[0rem\][data-error=true]:before {
   top: 0rem;
+}
+
+.\[\&\[data-error\=true\]\:before\]\:right-4[data-error=true]:before {
+  right: 1rem;
+}
+
+.\[\&\[data-error\=true\]\:before\]\:right-2[data-error=true]:before {
+  right: 0.5rem;
+}
+
+.\[\&\[data-error\=true\]\:before\]\:text-center[data-error=true]:before {
+  text-align: center;
 }
 
 .\[\&\[data-error\=true\]\:before\]\:text-red-500[data-error=true]:before {
@@ -2759,14 +2749,14 @@ a.active {
   color: rgb(239 68 68 / var(--tw-text-opacity));
 }
 
-.\[\&\[data-error\=true\]\:before\]\:ring-red-500[data-error=true]:before {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(239 68 68 / var(--tw-ring-opacity));
-}
-
 .\[\&\[data-error\=true\]\:before\]\:content-\[\"\8ACB\8F38\5165\5167\6587\"\][data-error=true]:before {
   --tw-content: "請輸入內文";
   content: var(--tw-content);
+}
+
+.\[\&\[data-error\=true\]\]\:ring-red-500[data-error=true] {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(239 68 68 / var(--tw-ring-opacity));
 }
 
 .\[\&\[data-state\=closed\]\:focus\]\:ring-2[data-state=closed]:focus {

@@ -24,6 +24,8 @@ export default function Mailbox({...props}: Mailbox) {
   const {toast} = useToast()
   const [open, setOpen] = React.useState(false)
 
+  const editorRef = React.useRef(null)
+
   const [editorState, setEditorState] = React.useState(() =>
     EditorState.createEmpty(),
   )
@@ -65,10 +67,14 @@ export default function Mailbox({...props}: Mailbox) {
     }
   }
 
-  // validate address, content and subject, must fill
   const validator = (): boolean => {
     let bool = true
+    const emailRegex =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     if (address.length === 0) {
+      setAddressStatus(true)
+      bool = false
+    } else if (!emailRegex.test(address)) {
       setAddressStatus(true)
       bool = false
     }
@@ -91,6 +97,8 @@ export default function Mailbox({...props}: Mailbox) {
     setSubjectStatus(false)
     setAddressStatus(false)
     setContentStatus(false)
+
+    setEditorState(() => EditorState.createEmpty())
   }
 
   const handleEscapeKeyDown = () => {
@@ -149,10 +157,16 @@ export default function Mailbox({...props}: Mailbox) {
             </div>
           </div>
           <div
-            className='relative h-40 p-2 rounded-md ring-1 ring-slate-400 [&[data-error=true]:before]:content-["請輸入內文"] [&[data-error=true]:before]:absolute [&[data-error=true]:before]:left-4 [&[data-error=true]:before]:top-[0rem] [&[data-error=true]:before]:text-red-500'
+            className='relative cursor-pointer h-40 p-2 rounded-md ring-1 ring-slate-400 [&[data-error=true]:before]:content-["請輸入內文"] [&[data-error=true]:before]:absolute [&[data-error=true]:before]:right-2 [&[data-error=true]:before]:top-[0rem] [&[data-error=true]:before]:text-red-500 [&[data-error=true]]:ring-red-500'
             data-error={contentStatus}
+            /* @ts-expect-error type-error */
+            onClick={() => editorRef.current?.focus()}
           >
-            <Editor editorState={editorState} onChange={setEditorState} />
+            <Editor
+              ref={editorRef}
+              editorState={editorState}
+              onChange={setEditorState}
+            />
           </div>
           <DialogFooter className='self-end h-9'>
             <button
