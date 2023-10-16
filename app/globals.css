@@ -922,6 +922,10 @@ p {
   height: 1px;
 }
 
+.h-\[26rem\] {
+  height: 26rem;
+}
+
 .h-\[52px\] {
   height: 52px;
 }
@@ -930,13 +934,12 @@ p {
   height: 68px;
 }
 
-.h-fit {
-  height: -moz-fit-content;
-  height: fit-content;
-}
-
 .h-full {
   height: 100%;
+}
+
+.h-40 {
+  height: 10rem;
 }
 
 .max-h-\[32\.5rem\] {
@@ -1035,10 +1038,6 @@ p {
   width: 16rem;
 }
 
-.w-72 {
-  width: 18rem;
-}
-
 .w-8 {
   width: 2rem;
 }
@@ -1049,10 +1048,6 @@ p {
 
 .w-9 {
   width: 2.25rem;
-}
-
-.w-96 {
-  width: 24rem;
 }
 
 .w-\[136rem\] {
@@ -1529,6 +1524,10 @@ p {
 
 .p-\[1px\] {
   padding: 1px;
+}
+
+.p-2 {
+  padding: 0.5rem;
 }
 
 .px-0 {
@@ -2469,6 +2468,10 @@ a.active {
     flex-direction: column;
   }
 
+  .sm\:items-baseline {
+    align-items: baseline;
+  }
+
   .sm\:justify-end {
     justify-content: flex-end;
   }
@@ -2707,6 +2710,14 @@ a.active {
   right: 0.5rem;
 }
 
+.\[\&\[data-error\=true\]\:after\]\:top-\[3\.25rem\][data-error=true]:after {
+  top: 3.25rem;
+}
+
+.\[\&\[data-error\=true\]\:after\]\:left-4[data-error=true]:after {
+  left: 1rem;
+}
+
 .\[\&\[data-error\=true\]\:after\]\:text-red-500[data-error=true]:after {
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
@@ -2722,6 +2733,11 @@ a.active {
   content: var(--tw-content);
 }
 
+.\[\&\[data-error\=true\]\:after\]\:content-\[\"\8ACB\8F38\5165\5167\6587\"\][data-error=true]:after {
+  --tw-content: "請輸入內文";
+  content: var(--tw-content);
+}
+
 .\[\&\[data-error\=true\]\:before\]\:absolute[data-error=true]:before {
   position: absolute;
 }
@@ -2734,9 +2750,18 @@ a.active {
   top: 3.25rem;
 }
 
+.\[\&\[data-error\=true\]\:before\]\:top-\[0rem\][data-error=true]:before {
+  top: 0rem;
+}
+
 .\[\&\[data-error\=true\]\:before\]\:text-red-500[data-error=true]:before {
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+
+.\[\&\[data-error\=true\]\:before\]\:ring-red-500[data-error=true]:before {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(239 68 68 / var(--tw-ring-opacity));
 }
 
 .\[\&\[data-error\=true\]\:before\]\:content-\[\"\8ACB\8F38\5165\5167\6587\"\][data-error=true]:before {
